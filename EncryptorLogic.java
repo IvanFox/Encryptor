@@ -72,8 +72,7 @@ public class EncryptorLogic implements EncryptorConstants {
         invertedMatrix[2] = -matrix[2];
     }
 
-    // Функция для шифрования полученных номеров в буквенный текст, свичер отвечает за переключение режима шифрования
-    // дешиврования
+    // Функция для шифрования полученных номеров в буквенный текст
     public String performEncryptDecrypt(String number, boolean switcher){
         int i = 0;
         int first, second;
@@ -85,14 +84,14 @@ public class EncryptorLogic implements EncryptorConstants {
             chunkForEncDec[0] = number.charAt(i++);
             chunkForEncDec[1] = number.charAt(i++);
 
-            first = findEncDecLetters(encryptionMatrix[0], encryptionMatrix[1], chunkForEncDec);
-            second = findEncDecLetters(encryptionMatrix[2], encryptionMatrix[3], chunkForEncDec);
-
             if (!switcher){
-                first *= inverseDeterminant;
-                second *= inverseDeterminant;
+                first = findEncDecLetters(invertedMatrix[0], invertedMatrix[1], chunkForEncDec) * inverseDeterminant;
+                second = findEncDecLetters(invertedMatrix[2], invertedMatrix[3], chunkForEncDec) * inverseDeterminant;
             }
-
+            else {
+                first = findEncDecLetters(encryptionMatrix[0], encryptionMatrix[1], chunkForEncDec);
+                second = findEncDecLetters(encryptionMatrix[2], encryptionMatrix[3], chunkForEncDec);
+            }
             builder.append((char)(first % NUMBER_OF_LETTERS));
             builder.append((char)(second % NUMBER_OF_LETTERS));
 
