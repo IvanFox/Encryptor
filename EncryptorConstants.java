@@ -3,9 +3,9 @@
  */
 public interface EncryptorConstants {
     int FRAME_WIDTH = 300;
-    int FRAME_HEIGHT = 300;
+    int FRAME_HEIGHT = 440;
     int BTN_WIDTH = 90;
-    int BTN_HEIGHT = 25;
+    int BTN_HEIGHT = 35;
 
     int MATRIX_SIZE = 4;
     int NUMBER_OF_LETTERS = 65536;

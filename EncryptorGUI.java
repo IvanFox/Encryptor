@@ -77,8 +77,9 @@ public class EncryptorGUI extends JFrame implements EncryptorConstants {
     private void initMainPanel(){
         mainPanel = new JPanel();
         mainPanel.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
-        textArea = new JTextArea(10,20);
-        textArea.setPreferredSize(new Dimension(FRAME_WIDTH-10, FRAME_WIDTH-100));
+        textArea = new JTextArea(19,20);
+        textArea.setPreferredSize(new Dimension(FRAME_WIDTH-10, FRAME_HEIGHT-50));
+        textArea.setFont(new Font("Verdana", Font.PLAIN, 13));
         scrollPane = new JScrollPane(textArea);
 
         btnEncrypt = new JButton("Encrypt");
