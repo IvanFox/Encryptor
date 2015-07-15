@@ -8,12 +8,9 @@ import java.io.IOException;
 /**
  * Created by Ivan on 03/06/2015.
  */
-public class EncryptorGUI extends JFrame implements Matrix{
+public class EncryptorGUI extends JFrame implements EncryptorConstants {
 
-    private final int FRAME_WIDTH = 300;
-    private final int FRAME_HEIGHT = 300;
-    private final int BTN_WIDTH = 90;
-    private final int BTN_HEIGHT = 25;
+
 
     private JPanel mainPanel;
     private JPanel matrixPanel;
@@ -22,13 +19,10 @@ public class EncryptorGUI extends JFrame implements Matrix{
     private JTextArea textArea;
     private JScrollPane scrollPane;
 
-    private JButton btnEncrypt;
-    private JButton btnDecrypt;
+    private JButton btnEncrypt,btnDecrypt;
 
     private JMenuBar menuBar;
-    private JMenuItem matrixItem;
-    private JMenuItem openFileItem;
-    private JMenuItem exitItem;
+    private JMenuItem matrixItem, openFileItem, exitItem;
     private JMenu menu;
 
     private JFileChooser fileChooser;
@@ -42,7 +36,6 @@ public class EncryptorGUI extends JFrame implements Matrix{
         initMenu();
         initMainPanel();
         initEventHandlers();
-
         setLocationRelativeTo(null);
         setVisible(true);
         pack();
@@ -174,11 +167,12 @@ public class EncryptorGUI extends JFrame implements Matrix{
         if (isMatrixSet){
             System.out.println(textArea.getText());
             if (textArea.getText().length() % 2 == 0)
-                textArea.setText(encryptorLogic.performEncryptDecrypt(encryptorLogic.analyzeText(textArea.getText().toLowerCase()), true));
+                textArea.setText(encryptorLogic.performEncryptDecrypt(textArea.getText(), true));
             else{
                 textArea.append(" ");
-                textArea.setText(encryptorLogic.performEncryptDecrypt(encryptorLogic.analyzeText(textArea.getText().toLowerCase()), true));
+                textArea.setText(encryptorLogic.performEncryptDecrypt(textArea.getText(), true));
             }
+            disableBtn();
         }
         else{
             displayMatrixSetError("Matrix is not set!\nPlease set the matrix first!");
@@ -188,7 +182,8 @@ public class EncryptorGUI extends JFrame implements Matrix{
 
     private void decryptText(){
         if (isMatrixSet){
-            textArea.setText(encryptorLogic.performEncryptDecrypt(encryptorLogic.analyzeText(textArea.getText().toLowerCase()), false));
+            textArea.setText(encryptorLogic.performEncryptDecrypt (textArea.getText(), false));
+            disableBtn();
         }
         else{
             displayMatrixSetError("Matrix is not set!\nPlease set the matrix first!");
@@ -210,5 +205,15 @@ public class EncryptorGUI extends JFrame implements Matrix{
                 decryptText();
             }
         });
+    }
+
+    private void disableBtn(){
+        if(btnEncrypt.isEnabled()){
+            btnEncrypt.setEnabled(false);
+            btnDecrypt.setEnabled(true);
+        } else{
+            btnEncrypt.setEnabled(true);
+            btnDecrypt.setEnabled(false);
+        }
     }
 }
