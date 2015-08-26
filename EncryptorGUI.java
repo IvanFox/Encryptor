@@ -31,6 +31,8 @@ public class EncryptorGUI extends JFrame implements EncryptorConstants {
     private int[] encryptionMatrix = new int[MATRIX_SIZE];
     private EncryptorLogic encryptorLogic = new EncryptorLogic();
 
+
+
     public EncryptorGUI(){
         setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         initMenu();
@@ -53,24 +55,9 @@ public class EncryptorGUI extends JFrame implements EncryptorConstants {
         menuBar.setVisible(true);
         setResizable(false);
         setJMenuBar(menuBar);
-        matrixItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setMatrix();
-            }
-        });
-        exitItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
-        openFileItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                initFileChooser();
-            }
-        });
+        matrixItem.addActionListener(actionEvent -> setMatrix());
+        exitItem.addActionListener(actionEvent -> System.exit(0));
+        openFileItem.addActionListener(actionEvent -> initFileChooser());
 
     }
 
@@ -193,19 +180,8 @@ public class EncryptorGUI extends JFrame implements EncryptorConstants {
     }
 
     private void initEventHandlers(){
-        btnEncrypt.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                encryptText();
-
-            }
-        });
-        btnDecrypt.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                decryptText();
-            }
-        });
+        btnEncrypt.addActionListener(actionListener -> encryptText());
+        btnDecrypt.addActionListener(actionListener -> decryptText());
     }
 
     private void disableBtn(){
