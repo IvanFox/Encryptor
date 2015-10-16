@@ -11,8 +11,7 @@ public class EncryptorLogic implements EncryptorConstants {
     protected int[] encryptionMatrix = new int[MATRIX_SIZE];
     protected int[] invertedMatrix = new int[MATRIX_SIZE];
 
-    // Проверка задаваемой матрицы на возможность ее использования для шифрования
-    // Возвращает булиан
+    // Checks whether entered matrix is valid to be used in futher encryption
     public boolean checkMatrix(int[] matrix) {
         determinant = matrix[0] * matrix[3] - matrix[2] * matrix[1];
         if(gcd(determinant, NUMBER_OF_LETTERS) == 1){
@@ -26,8 +25,7 @@ public class EncryptorLogic implements EncryptorConstants {
 
     }
 
-    // Функция для нахождения инвертированого детирминанта с помощью детерминанта
-    // Возвращает интовый результат вычисления
+    // Used to find matrix inverse determinant
     public int findInverseDeterminant(){
         int temp = determinant;
         int count = 1;
@@ -43,7 +41,7 @@ public class EncryptorLogic implements EncryptorConstants {
         return inverseDeterminant = count;
     }
 
-
+    // greatest common d
     public int gcd(int num1, int num2){
         int largest, smallest, result = 0;
         if (num1 == 0){
@@ -64,7 +62,8 @@ public class EncryptorLogic implements EncryptorConstants {
         System.out.println("GCD of: " + num1 + " " + num2 + " is " + result + "\n");
         return Math.abs(result);
     }
-
+    
+    // invert matrix
     public void findInverse(int[] matrix){
         invertedMatrix[0] = matrix[3];
         invertedMatrix[3] = matrix[0];
@@ -72,7 +71,7 @@ public class EncryptorLogic implements EncryptorConstants {
         invertedMatrix[2] = -matrix[2];
     }
 
-    // Функция для шифрования полученных номеров в буквенный текст
+    // function to perform encryption or decryption 
     public String performEncryptDecrypt(String number, boolean switcher){
         int i = 0;
         int first, second;
@@ -84,11 +83,11 @@ public class EncryptorLogic implements EncryptorConstants {
             chunkForEncDec[0] = number.charAt(i++);
             chunkForEncDec[1] = number.charAt(i++);
 
-            if (!switcher){
+            if (!switcher){ // if false -> decryption
                 first = findEncDecLetters(invertedMatrix[0], invertedMatrix[1], chunkForEncDec) * inverseDeterminant;
                 second = findEncDecLetters(invertedMatrix[2], invertedMatrix[3], chunkForEncDec) * inverseDeterminant;
             }
-            else {
+            else { // if true encryption
                 first = findEncDecLetters(encryptionMatrix[0], encryptionMatrix[1], chunkForEncDec);
                 second = findEncDecLetters(encryptionMatrix[2], encryptionMatrix[3], chunkForEncDec);
             }
@@ -108,7 +107,7 @@ public class EncryptorLogic implements EncryptorConstants {
         }
         return returnLetter;
     }
-
+     
     public String openChosenFile(String filepath) throws IOException{
         BufferedReader br = new BufferedReader(new FileReader(filepath));
         StringBuilder sb = new StringBuilder();
